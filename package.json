@@ -1,0 +1,27 @@
+{
+  "name": "gig-workforce-platform",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev -w @gig/api\" \"npm run dev -w @gig/web\"",
+    "dev:api": "npm run dev -w @gig/api",
+    "dev:web": "npm run dev -w @gig/web",
+    "build": "npm run build -w @gig/shared && npm run build -w @gig/api && npm run build -w @gig/web",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:generate": "npm run db:generate -w @gig/api",
+    "db:migrate": "npm run db:migrate -w @gig/api",
+    "db:push": "npm run db:push -w @gig/api",
+    "db:reset": "npm run db:reset -w @gig/api",
+    "db:seed": "npm run db:seed -w @gig/api",
+    "db:studio": "npm run db:studio -w @gig/api",
+    "db:setup": "npm run db:up && npm run db:generate && npm run db:migrate && npm run db:seed"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "typescript": "^5.7.3"
+  }
+}
