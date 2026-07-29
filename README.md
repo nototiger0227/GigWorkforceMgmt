@@ -579,7 +579,3 @@ npm run db:reset
 ```
 
 ---
-
-## 📄 License
-
-Not specified — add a `LICENSE` file to define usage terms.
