@@ -12,6 +12,15 @@ export function clearToken(): void {
   localStorage.removeItem('gig_token');
 }
 
+export class ApiError extends Error {
+  details?: Record<string, string[]>;
+  constructor(message: string, details?: Record<string, string[]>) {
+    super(message);
+    this.name = 'ApiError';
+    this.details = details;
+  }
+}
+
 export async function api<T>(path: string, options: RequestInit = {}): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
@@ -24,7 +33,7 @@ export async function api<T>(path: string, options: RequestInit = {}): Promise<T
 
   if (!res.ok) {
     const body = await res.json().catch(() => ({ error: res.statusText }));
-    throw new Error(body.error ?? 'Request failed');
+    throw new ApiError(body.error ?? 'Request failed', body.details?.fieldErrors);
   }
 
   return res.json() as Promise<T>;

@@ -78,8 +78,10 @@ export function Button({
   children,
   variant = 'primary',
   className,
+  isLoading,
+  disabled,
   ...props
-}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant }) {
+}: React.ButtonHTMLAttributes<HTMLButtonElement> & { variant?: ButtonVariant; isLoading?: boolean }) {
   return (
     <button
       className={clsx(
@@ -87,8 +89,10 @@ export function Button({
         btnVariants[variant],
         className,
       )}
+      disabled={isLoading || disabled}
       {...props}
     >
+      {isLoading && <span className="h-4 w-4 rounded-full border-2 border-current border-t-transparent animate-spin" />}
       {children}
     </button>
   );
@@ -134,10 +138,12 @@ export function FormField({
   label,
   children,
   hint,
+  error,
 }: {
   label: string;
   children: React.ReactNode;
   hint?: string;
+  error?: string;
 }) {
   return (
     <div className="flex flex-col gap-1.5">
@@ -145,7 +151,8 @@ export function FormField({
         {label}
       </label>
       {children}
-      {hint && <p className="text-xs text-slate-500">{hint}</p>}
+      {error && <p className="text-xs font-medium text-red-400 mt-0.5">{error}</p>}
+      {!error && hint && <p className="text-xs text-slate-500 mt-0.5">{hint}</p>}
     </div>
   );
 }
