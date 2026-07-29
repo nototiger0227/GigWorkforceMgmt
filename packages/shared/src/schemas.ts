@@ -34,6 +34,9 @@ export const createGigSchema = z.object({
 }).refine((data) => data.expiresAt > data.startsAt, {
   message: 'expiresAt must be after startsAt',
   path: ['expiresAt'],
+}).refine((data) => data.expiresAt > new Date(), {
+  message: 'Expiry time cannot be in the past',
+  path: ['expiresAt'],
 });
 
 export const partnerGigWebhookSchema = z.object({

@@ -25,6 +25,7 @@ export function CompanyPage() {
     expiresAt: '',
     preferPlatformTags: '',
   });
+  const [scheduleStart, setScheduleStart] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [fieldErrors, setFieldErrors] = useState<Record<string, string[]>>({});
 
@@ -58,7 +59,7 @@ export function CompanyPage() {
         ? form.preferPlatformTags.split(',').map((t) => t.trim()).filter(Boolean)
         : [],
     };
-    if (!form.startsAt) delete payload.startsAt;
+    if (!scheduleStart || !form.startsAt) delete payload.startsAt;
     if (!form.expiresAt) delete payload.expiresAt;
 
     try {
@@ -135,11 +136,19 @@ export function CompanyPage() {
                 {Object.values(Urgency).map((u) => <option key={u} value={u}>{u}</option>)}
               </Select>
             </FormField>
-            <FormField label="Starts At" error={fieldErrors.startsAt?.[0]}>
-              <Input type="datetime-local" value={form.startsAt} onChange={(e) => setForm({ ...form, startsAt: e.target.value })} />
-            </FormField>
+            <div className="md:col-span-2">
+              <label className="flex items-center gap-2 text-sm text-slate-300">
+                <input type="checkbox" checked={scheduleStart} onChange={(e) => setScheduleStart(e.target.checked)} className="rounded border-white/10 bg-white/5 text-brand-500 focus:ring-brand-500/50" />
+                Schedule start for later
+              </label>
+            </div>
+            {scheduleStart && (
+              <FormField label="Starts At" error={fieldErrors.startsAt?.[0]}>
+                <Input type="datetime-local" value={form.startsAt} onChange={(e) => setForm({ ...form, startsAt: e.target.value })} min={new Date().toISOString().slice(0, 16)} />
+              </FormField>
+            )}
             <FormField label="Expires At" error={fieldErrors.expiresAt?.[0]}>
-              <Input type="datetime-local" value={form.expiresAt} onChange={(e) => setForm({ ...form, expiresAt: e.target.value })} />
+              <Input type="datetime-local" value={form.expiresAt} onChange={(e) => setForm({ ...form, expiresAt: e.target.value })} min={new Date().toISOString().slice(0, 16)} />
             </FormField>
             <div className="md:col-span-2">
               <FormField label="Prefer Platform Tags" hint="Comma-separated, e.g. swiggy,zomato" error={fieldErrors.preferPlatformTags?.[0]}>
