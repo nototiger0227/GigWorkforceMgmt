@@ -9,6 +9,7 @@
 [![Redis](https://img.shields.io/badge/Redis-7-DC382D?logo=redis)](https://redis.io)
 [![Socket.IO](https://img.shields.io/badge/Socket.IO-realtime-010101?logo=socketdotio)](https://socket.io)
 
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/1cdf490a-e615-4a3c-8bfa-5531eaf6b679" />
 ---
 
 ## 📖 Table of Contents
@@ -578,7 +579,3 @@ npm run db:reset
 ```
 
 ---
-
-## 📄 License
-
-Not specified — add a `LICENSE` file to define usage terms.
