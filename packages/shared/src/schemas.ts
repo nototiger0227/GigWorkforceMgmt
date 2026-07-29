@@ -5,6 +5,25 @@ export const loginSchema = z.object({
   password: z.string().min(6),
 });
 
+export const registerSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+  role: z.enum(['RIDER', 'COMPANY']),
+  companyName: z.string().min(2).optional(),
+}).refine(data => {
+  if (data.role === 'COMPANY') return !!data.companyName;
+  return true;
+}, {
+  message: "Company name is required for company accounts",
+  path: ["companyName"]
+});
+
+export const adminCreateSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(6),
+});
+
+
 export const createCompanySchema = z.object({
   name: z.string().min(2).max(100),
   contactEmail: z.string().email().optional(),

@@ -166,11 +166,19 @@ export function LoginPage() {
             </div>
           </div>
 
-          <p className="mt-6 text-center text-xs text-slate-600">
-            <button onClick={() => navigate('/')} className="hover:text-slate-400 transition">
-              ← Back to home
-            </button>
-          </p>
+          <div className="mt-6 text-center text-sm text-slate-400 space-y-2">
+            <p>
+              Don't have an account?{' '}
+              <button onClick={() => navigate('/register')} className="text-brand-400 hover:text-brand-300 font-semibold transition">
+                Sign up
+              </button>
+            </p>
+            <p>
+              <button onClick={() => navigate('/')} className="hover:text-slate-200 transition text-xs">
+                ← Back to home
+              </button>
+            </p>
+          </div>
         </div>
       </div>
     </div>

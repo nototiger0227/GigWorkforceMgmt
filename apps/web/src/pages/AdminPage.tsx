@@ -12,6 +12,8 @@ import { Button, Card, EmptyState, Input, SectionHeader, StatCard, Toast } from 
 export function AdminPage() {
   const qc = useQueryClient();
   const [companyName, setCompanyName] = useState('');
+  const [adminEmail, setAdminEmail] = useState('');
+  const [adminPassword, setAdminPassword] = useState('');
   const [toast, setToast] = useState('');
 
   const onEvent = useCallback(() => {
@@ -52,6 +54,18 @@ export function AdminPage() {
     setCompanyName('');
     setToast('Company created');
     qc.invalidateQueries({ queryKey: ['admin-companies'] });
+  }
+
+  async function createAdmin() {
+    if (!adminEmail.trim() || !adminPassword.trim()) return;
+    try {
+      await api('/auth/admin/register', { method: 'POST', body: JSON.stringify({ email: adminEmail, password: adminPassword }) });
+      setAdminEmail('');
+      setAdminPassword('');
+      setToast('Admin created');
+    } catch (err: any) {
+      setToast(err.message || 'Failed to create admin');
+    }
   }
 
   async function cancelGig(id: string) {
@@ -128,10 +142,17 @@ export function AdminPage() {
 
       <div className="mt-8 grid gap-6 lg:grid-cols-2">
         <Card>
-          <SectionHeader label="Management" title="Companies" />
-          <div className="mb-4 flex gap-2">
-            <Input placeholder="New company name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
-            <Button onClick={createCompany}>Add</Button>
+          <SectionHeader label="Management" title="Companies & Admins" />
+          <div className="mb-4 space-y-4">
+            <div className="flex gap-2">
+              <Input placeholder="New company name" value={companyName} onChange={(e) => setCompanyName(e.target.value)} />
+              <Button onClick={createCompany}>Add Company</Button>
+            </div>
+            <div className="flex gap-2">
+              <Input placeholder="New admin email" type="email" value={adminEmail} onChange={(e) => setAdminEmail(e.target.value)} />
+              <Input placeholder="Password" type="password" value={adminPassword} onChange={(e) => setAdminPassword(e.target.value)} />
+              <Button onClick={createAdmin}>Add Admin</Button>
+            </div>
           </div>
           <ul className="space-y-2 text-sm">
             {companies.map((c) => (
