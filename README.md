@@ -1,4 +1,5 @@
 # 🚴 Gig Workforce Platform
+<img width="1024" height="559" alt="image" src="https://github.com/user-attachments/assets/1cdf490a-e615-4a3c-8bfa-5531eaf6b679" />
 
 > A real-time, end-to-end **Gig Management Operating System** connecting companies that need on-demand workers (delivery agents, task fulfillers) with verified riders ready to work.
 
